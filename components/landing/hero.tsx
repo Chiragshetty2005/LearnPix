@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, PlayCircle, Sparkles } from "lucide-react";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from "next/link";
 
 export function Hero() {
     return (
@@ -17,29 +19,41 @@ export function Hero() {
                 </div>
 
                 <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6">
-                    Create Viral Short Videos <br />
+                    Create Short Video for Kids <br />
                     <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                         With the Power of AI
                     </span>
                 </h1>
 
                 <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10">
-                    Vidmaxx automates your social media growth. Generate engaging short videos,
+                    Vidmaxx helps to generate Conceptual Video. Generate engaging short videos,
                     schedule them instantly for Instagram, TikTok, and YouTube, and empower
                     learning with our dedicated kids' platform.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button size="lg" className="h-12 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-base">
-                        Start Creating Free
-                        <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <Button size="lg" className="h-12 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-base">
+                                Start Creating Free
+                                <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                        </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                        <Link href="/dashboard">
+                            <Button size="lg" className="h-12 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-base">
+                                Go to Dashboard
+                                <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                        </Link>
+                    </SignedIn>
+
                     <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-white/20 text-white hover:bg-white/10 text-base bg-transparent">
                         <PlayCircle className="mr-2 w-4 h-4" />
                         Watch Demo
                     </Button>
                 </div>
-
             </div>
         </section>
     );
