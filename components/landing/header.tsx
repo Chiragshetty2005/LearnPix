@@ -1,3 +1,4 @@
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -22,12 +23,24 @@ export function Header() {
                 </nav>
 
                 <div className="flex items-center gap-4">
-                    <Link href="/login" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors hidden sm:block">
-                        Sign In
-                    </Link>
-                    <Button className="bg-white text-black hover:bg-zinc-200 rounded-full px-6">
-                        Get Started
-                    </Button>
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <div className="text-sm font-medium text-zinc-400 hover:text-white transition-colors cursor-pointer hidden sm:block">
+                                Sign In
+                            </div>
+                        </SignInButton>
+                        <SignInButton mode="modal">
+                            <Button className="bg-white text-black hover:bg-zinc-200 rounded-full px-6">
+                                Get Started
+                            </Button>
+                        </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                        <Button variant="ghost" className="text-zinc-400 hover:text-white mr-2" asChild>
+                            <Link href="/dashboard">Dashboard</Link>
+                        </Button>
+                        <UserButton />
+                    </SignedIn>
                 </div>
             </div>
         </header>
