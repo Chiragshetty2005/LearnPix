@@ -42,13 +42,13 @@ export function StepNiche({
     onComplete: (data: any) => void
 }) {
     const [selectedTab, setSelectedTab] = useState(initialData?.nicheType || "available");
-    const [selectedNiche, setSelectedNiche] = useState<string | null>(initialData?.nicheValue && initialData.nicheType === 'available' ? initialData.nicheValue : null);
-    const [customNiche, setCustomNiche] = useState(initialData?.nicheValue && initialData.nicheType === 'custom' ? initialData.nicheValue : "");
+    const [selectedNiche, setSelectedNiche] = useState<string | null>(initialData?.niche && initialData.nicheType === 'available' ? initialData.niche : null);
+    const [customNiche, setCustomNiche] = useState(initialData?.customNiche && initialData.nicheType === 'custom' ? initialData.customNiche : "");
 
     const handleContinue = () => {
         const data = selectedTab === "available"
-            ? { nicheType: "available", nicheValue: selectedNiche }
-            : { nicheType: "custom", nicheValue: customNiche };
+            ? { niche: selectedNiche, nicheType: "available" }
+            : { niche: "Custom", customNiche: customNiche, nicheType: "custom" };
 
         onComplete(data);
     };
