@@ -60,7 +60,11 @@ export function SeriesList() {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {series.map((item) => (
-                <SeriesCard key={item.id} series={item} />
+                <SeriesCard
+                    key={item.id}
+                    series={item}
+                    onDelete={(id) => setSeries(prev => prev.filter(s => s.id !== id))}
+                />
             ))}
         </div>
     );
