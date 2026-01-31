@@ -15,8 +15,14 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useRouter } from "next/navigation";
 
-export function SeriesCard({ series }: { series: any }) {
+interface SeriesCardProps {
+    series: any;
+    onDelete?: (id: string) => void;
+}
+
+export function SeriesCard({ series, onDelete }: SeriesCardProps) {
     const [isLoading, setIsLoading] = useState(false);
 
     // Find style image
@@ -28,6 +34,8 @@ export function SeriesCard({ series }: { series: any }) {
         setIsLoading(true);
         try {
             await deleteSeries(series.id);
+            // Call the parent callback to update UI immediately
+            if (onDelete) onDelete(series.id);
         } catch (error) {
             console.error(error);
             alert("Failed to delete");
@@ -46,10 +54,14 @@ export function SeriesCard({ series }: { series: any }) {
         }
     };
 
+    const router = useRouter();
+
     const handleGenerate = async () => {
         setIsLoading(true);
         try {
             await generateSeriesVideo(series.id);
+            // Navigate to video page to show generating status (as requested)
+            router.push("/dashboard/video");
         } finally {
             setIsLoading(false);
         }
